@@ -1,0 +1,55 @@
+<ui:composition template="../templates/template.xhtml"
+                        xmlns:ui="http://java.sun.com/jsf/facelets"
+                        xmlns:f="http://java.sun.com/jsf/core"
+                        xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:p="http://primefaces.org/ui">
+                            
+    <ui:define name="conteudo">
+        <h:form id="form">
+            #{msgs.nome}<p:inputText id="nome" value="#{temaBean.obj.nome}" /><br/>
+            <p:commandButton id="salvar" action="#{temaBean.salvar}" value="#{msgs.salvar}" ajax="false" />
+            <p:commandButton id="buscar" action="#{temaBean.buscar}" value="#{msgs.buscar}" ajax="false" />
+            <p:commandButton id="voltar" action="index" value="#{msgs.voltar}" ajax="false" />
+
+            <br/>
+
+            <p:dataTable  id="temas" value="#{temaBean.temas}" var="obj">
+                <f:facet name="header">
+                    #{msgs.tema}
+                </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.nomedt}" />
+                    </f:facet>
+                    <h:outputText id="outDtNome" rendered="#{obj != temaBean.edt}" value="#{obj.nome}" />
+                    <h:inputText id="inDtNome" rendered="#{obj == temaBean.edt}" value="#{temaBean.edt.nome}" />
+                </p:column>
+                <p:column style="width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.acoesdt}" />
+                    </f:facet>
+                    <p:commandLink id="editar" rendered="#{obj != temaBean.edt}" update=":form:temas">  
+                        <h:graphicImage value="../imagens/pencil.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{temaBean.edt}" />  
+                    </p:commandLink>
+                    <h:commandLink id="cancelar" action="#{temaBean.cancelar}" rendered="#{obj == temaBean.edt}">
+                        <h:graphicImage value="../imagens/remove.png" />
+                    </h:commandLink>
+                    <h:commandLink id="dtSalvar" action="#{temaBean.salvar}" rendered="#{obj == temaBean.edt}">
+                        <h:graphicImage value="../imagens/save.png" />
+                    </h:commandLink>
+                    <p:commandLink id="excluir" action="#{temaBean.excluir}" update=":form:temas">
+                        <h:graphicImage value="../imagens/trash.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{temaBean.selected}" />
+                        <p:confirm header="#{msgs.confirm}" message="#{msgs.msgconfirm}" icon="ui-icon-alert" />
+                    </p:commandLink>     
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="#{msgs.msgsim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="#{msgs.msgnao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

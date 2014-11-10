@@ -1,0 +1,96 @@
+<ui:composition template="../templates/template.xhtml"
+                        xmlns:ui="http://java.sun.com/jsf/facelets"
+                        xmlns:f="http://java.sun.com/jsf/core"
+                        xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:p="http://primefaces.org/ui">
+                            
+    <ui:define name="conteudo">
+        <h:form id="form">
+            #{msgs.nome}<p:inputText id="nome" value="#{consoleBean.obj.nome}" /><br/>
+            #{msgs.descricao}<p:inputText id="descricao" value="#{consoleBean.obj.descricao}" /><br/>
+            #{msgs.preco}<p:inputText id="preco" value="#{consoleBean.obj.preco}" /><br/>
+            #{msgs.qtd_est}<p:inputText id="qtd" value="#{consoleBean.obj.quantidade}" /><br/>
+            #{msgs.data}<p:calendar id="effect" value="#{consoleBean.obj.dta}" effect="fold" /> <br />
+            #{msgs.fabricantecd}<p:selectOneMenu id="fabricante" value="#{consoleBean.obj.fabricante}" >
+                <f:selectItems id="fabricantes" value="#{consoleBean.fabricantes}" />
+            </p:selectOneMenu><br/>
+            <p:commandButton id="salvar" action="#{consoleBean.salvar}" value="#{msgs.salvar}" ajax="false" />
+            <p:commandButton id="voltar" action="index" value="#{msgs.voltar}" ajax="false"/>
+            <br/>     
+            <p:dataTable id="consoles" value="#{consoleBean.consoles}" var="obj">
+                <f:facet name="header">
+                    #{msgs.console}
+                </f:facet>           
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.nomedt}" />
+                    </f:facet>
+                    <h:outputText id="outDtNome" rendered="#{obj != consoleBean.edt}" value="#{obj.nome}" />
+                    <h:inputText id="inDtNome" rendered="#{obj == consoleBean.edt}" value="#{consoleBean.edt.nome}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.descricao}" />
+                    </f:facet>
+                    <h:outputText id="outDtDescricao" rendered="#{obj != consoleBean.edt}" value="#{obj.descricao}" />
+                    <h:inputText id="inDtDescricao" rendered="#{obj == consoleBean.edt}" value="#{consoleBean.edt.descricao}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.precodt}" />
+                    </f:facet>
+                    <h:outputText id="outDtPreco" rendered="#{obj != consoleBean.edt}" value="#{obj.preco}" />
+                    <h:inputText id="inDtPreco" rendered="#{obj == consoleBean.edt}" value="#{consoleBean.edt.preco}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.qtd_estdt}" />
+                    </f:facet>
+                    <h:outputText id="outDtQtd" rendered="#{obj != consoleBean.edt}" value="#{obj.quantidade}" />
+                    <h:inputText id="inDtQtd" rendered="#{obj == consoleBean.edt}" value="#{consoleBean.edt.quantidade}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.datadt}" />
+                    </f:facet>
+                    <h:outputText id="outDtDta" rendered="#{obj != consoleBean.edt}" value="#{obj.dta}" />
+
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.fabricantedt}" />
+                    </f:facet>
+                    <h:outputText id="outDtDesenvolvedor" rendered="#{obj != consoleBean.edt}" value="#{obj.fabricante.nome}" />
+                    <h:selectOneMenu id="inDtDesenvolvedor" rendered="#{obj == consoleBean.edt}" value="#{consoleBean.edt.fabricante}" >
+                        <f:selectItems id="inDtDesenvolvedors" value="#{consoleBean.fabricantes}" />
+                    </h:selectOneMenu>
+                </p:column>
+                <p:column style="width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.acoesdt}" />
+                    </f:facet>
+                    <p:commandLink id="editar" rendered="#{obj != consoleBean.edt}" update=":form:consoles">  
+                        <h:graphicImage value="../imagens/pencil.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{consoleBean.edt}" />  
+                    </p:commandLink>
+                    <h:commandLink id="cancelar" action="#{consoleBean.cancelar}" rendered="#{obj == consoleBean.edt}">
+                        <h:graphicImage value="../imagens/remove.png" />
+                    </h:commandLink>
+                    <h:commandLink id="dtSalvar" action="#{consoleBean.salvar}" rendered="#{obj == consoleBean.edt}">
+                        <h:graphicImage value="../imagens/save.png" />
+                    </h:commandLink>
+                    <p:commandLink id="excluir" action="#{consoleBean.excluir}" update=":form:consoles">
+                        <h:graphicImage value="../imagens/trash.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{consoleBean.selected}" />
+                        <p:confirm header="#{msgs.confirm}" message="#{msgs.msgconfirm}" icon="ui-icon-alert" />
+                    </p:commandLink>     
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="#{msgs.msgsim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="#{msgs.msgnao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

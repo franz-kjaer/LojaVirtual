@@ -1,0 +1,96 @@
+<ui:composition template="../templates/template.xhtml"
+                        xmlns:ui="http://java.sun.com/jsf/facelets"
+                        xmlns:f="http://java.sun.com/jsf/core"
+                        xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:p="http://primefaces.org/ui">
+                            
+    <ui:define name="conteudo">
+        <h:form id="form">
+            #{msgs.nome}<p:inputText id="nome" value="#{miniaturaBean.obj.nome}" /><br/>
+            #{msgs.descricao}<p:inputText id="descricao" value="#{miniaturaBean.obj.descricao}" /><br/>
+            #{msgs.preco}<p:inputText id="preco" value="#{miniaturaBean.obj.preco}" /><br/>
+            #{msgs.qtd_est}<p:inputText id="qtd" value="#{miniaturaBean.obj.quantidade}" /><br/>
+            #{msgs.data}<p:calendar id="effect" value="#{miniaturaBean.obj.dta}" effect="fold" /> <br />
+            #{msgs.temacd}<p:selectOneMenu id="tema" value="#{miniaturaBean.obj.tema}" >
+                <f:selectItems id="temas" value="#{miniaturaBean.temas}" />
+            </p:selectOneMenu><br/>
+            <p:commandButton id="salvar" action="#{miniaturaBean.salvar}" value="#{msgs.salvar}" ajax="false" />
+            <p:commandButton id="voltar" action="index" value="#{msgs.voltar}" ajax="false"/>
+            <br/>     
+            <p:dataTable id="miniaturas" value="#{miniaturaBean.miniaturas}" var="obj">
+                <f:facet name="header">
+                    #{msgs.miniatura}
+                </f:facet>           
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.nomedt}" />
+                    </f:facet>
+                    <h:outputText id="outDtNome" rendered="#{obj != miniaturaBean.edt}" value="#{obj.nome}" />
+                    <h:inputText id="inDtNome" rendered="#{obj == miniaturaBean.edt}" value="#{miniaturaBean.edt.nome}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.descricao}" />
+                    </f:facet>
+                    <h:outputText id="outDtDescricao" rendered="#{obj != miniaturaBean.edt}" value="#{obj.descricao}" />
+                    <h:inputText id="inDtDescricao" rendered="#{obj == miniaturaBean.edt}" value="#{miniaturaBean.edt.descricao}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.precodt}" />
+                    </f:facet>
+                    <h:outputText id="outDtPreco" rendered="#{obj != miniaturaBean.edt}" value="#{obj.preco}" />
+                    <h:inputText id="inDtPreco" rendered="#{obj == miniaturaBean.edt}" value="#{miniaturaBean.edt.preco}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.qtd_estdt}" />
+                    </f:facet>
+                    <h:outputText id="outDtQtd" rendered="#{obj != miniaturaBean.edt}" value="#{obj.quantidade}" />
+                    <h:inputText id="inDtQtd" rendered="#{obj == miniaturaBean.edt}" value="#{miniaturaBean.edt.quantidade}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.datadt}" />
+                    </f:facet>
+                    <h:outputText id="outDtDta" rendered="#{obj != miniaturaBean.edt}" value="#{obj.dta}" />
+
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.temadt}" />
+                    </f:facet>
+                    <h:outputText id="outDtTema" rendered="#{obj != miniaturaBean.edt}" value="#{obj.tema.nome}" />
+                    <h:selectOneMenu id="inDtTema" rendered="#{obj == miniaturaBean.edt}" value="#{miniaturaBean.edt.tema}" >
+                        <f:selectItems id="inDtTemas" value="#{miniaturaBean.temas}" />
+                    </h:selectOneMenu>
+                </p:column>
+                <p:column style="width: 20%">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs.acoesdt}" />
+                    </f:facet>
+                    <p:commandLink id="editar" rendered="#{obj != miniaturaBean.edt}" update=":form:miniaturas">  
+                        <h:graphicImage value="../imagens/pencil.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{miniaturaBean.edt}" />  
+                    </p:commandLink>
+                    <h:commandLink id="cancelar" action="#{miniaturaBean.cancelar}" rendered="#{obj == miniaturaBean.edt}">
+                        <h:graphicImage value="../imagens/remove.png" />
+                    </h:commandLink>
+                    <h:commandLink id="dtSalvar" action="#{miniaturaBean.salvar}" rendered="#{obj == miniaturaBean.edt}">
+                        <h:graphicImage value="../imagens/save.png" />
+                    </h:commandLink>
+                    <p:commandLink id="excluir" action="#{miniaturaBean.excluir}" update=":form:miniaturas">
+                        <h:graphicImage value="../imagens/trash.png" />
+                        <f:setPropertyActionListener value="#{obj}" target="#{miniaturaBean.selected}" />
+                        <p:confirm header="#{msgs.confirm}" message="#{msgs.msgconfirm}" icon="ui-icon-alert" />
+                    </p:commandLink>     
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="#{msgs.msgsim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="#{msgs.msgnao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
