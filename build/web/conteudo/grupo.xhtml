@@ -1,0 +1,38 @@
+<ui:composition template="../templates/template.xhtml"
+                        xmlns:ui="http://java.sun.com/jsf/facelets"
+                        xmlns:f="http://java.sun.com/jsf/core"
+                        xmlns:h="http://java.sun.com/jsf/html"
+                        xmlns:p="http://primefaces.org/ui">
+                            
+    <ui:define name="conteudo">
+        <h:form id="form">
+        <p:accordionPanel>
+                <p:tab title="#{msgs.membro1}">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                            value="#{msgs.membrotxt}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="#{msgs.membro2}">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                            value="#{msgs.membrotxt}" />
+                    </h:panelGrid>
+                  </p:tab>
+                <p:tab title="#{msgs.membro3}">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                            value="#{msgs.membrotxt}" />
+                    </h:panelGrid>
+                  </p:tab>
+                    <p:tab title="#{msgs.membro4}">
+                    <h:panelGrid columns="1" cellpadding="10">
+                        <h:outputText
+                            value="#{msgs.membrotxt}" />
+                    </h:panelGrid>
+                   </p:tab>
+        </p:accordionPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

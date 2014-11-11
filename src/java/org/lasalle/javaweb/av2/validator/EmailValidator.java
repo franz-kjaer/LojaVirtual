@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.pro.paulomotta.lojavirtual.validator;
+package org.lasalle.javaweb.av2.validator;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -13,7 +13,7 @@ import javax.faces.validator.ValidatorException;
 
 /**
  *
- * @author aluno.unilasalle
+ * @author Francis
  */
 @FacesValidator("validator.EmailValidator")
 public class EmailValidator implements Validator{
